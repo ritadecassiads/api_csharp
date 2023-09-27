@@ -5,8 +5,8 @@ public class Equipe
     public int EquipeId { get; set; }
 
     // Relacionamento um para muitos
-    public ICollection<Usuario>? Usuarios { get; set; }
+    public List<Usuario>? Usuarios { get; set; }
 
     // Relacionamento um para muitos
-    public ICollection<Tarefa>? Tarefas { get; set; }
+    public List<Tarefa>? Tarefas { get; set; }
 }

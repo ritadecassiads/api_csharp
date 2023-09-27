@@ -1,3 +1,4 @@
+using System.Globalization;
 using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -41,13 +42,33 @@ public class TarefaController : ControllerBase
     {
         try
         {
-            _ctx.Tarefas.Add(tarefa);
-            _ctx.SaveChanges();
-            return Created("Tarefa ccadastrada com sucesso!", tarefa);
+            // valido se o titulo não está vazio
+            if (string.IsNullOrWhiteSpace(tarefa.Titulo))
+            {
+                return BadRequest(new { message = "O título deve ser preenchido!" });
+            }
+            else
+            {
+                // verifico se ja existe no banco uma tarefa com o mesmo titulo
+                var tarefaEncontrada = _ctx.Tarefas.FirstOrDefault(x => x.Titulo == tarefa.Titulo);
+
+                if (tarefaEncontrada != null)
+                {
+                    return BadRequest(new { message = "Tarefa já cadastrada no banco!" });
+                }
+                else
+                {
+                    
+                    _ctx.Tarefas.Add(tarefa);
+                    _ctx.SaveChanges();
+
+                    return Created("", new { message = "Tarefa cadastrada com sucesso!", tarefa });
+                }
+            }
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            return BadRequest(e.Message);
+            return BadRequest(new { message = "Não foi possível cadastrar a tarefa!" });
         }
     }
 
@@ -75,6 +96,7 @@ public class TarefaController : ControllerBase
     {
         try
         {
+            // encontro a tarefa atraves do Id
             Tarefa? tarefaEncontrada = _ctx.Tarefas.Find(id);
             if (tarefaEncontrada != null)
             {
@@ -94,6 +116,7 @@ public class TarefaController : ControllerBase
     [Route("alterar/{id}")]
     public IActionResult Alterar([FromRoute] int id, [FromBody] Tarefa tarefa)
     {
+        // metodo que alterera as informações da tarefa
         try
         {
             Tarefa? tarefaEncontrada = _ctx.Tarefas.FirstOrDefault(x => x.TarefaId == id);
@@ -102,7 +125,32 @@ public class TarefaController : ControllerBase
             {
                 tarefaEncontrada.Titulo = tarefa.Titulo;
                 tarefaEncontrada.Descricao = tarefa.Descricao;
-                // fazer a alteração do campo Concluida pra true
+                tarefaEncontrada.ConcluirEm = tarefa.ConcluirEm;
+
+                _ctx.Tarefas.Update(tarefaEncontrada);
+                _ctx.SaveChanges();
+                return Ok();
+            }
+            return NotFound();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPut]
+    [Route("alterarConcluida/{id}")]
+    public IActionResult AlterarConcluida([FromRoute] int id)
+    {
+        // metodo que alterera a tarefa para concluída
+        try
+        {
+            Tarefa? tarefaEncontrada = _ctx.Tarefas.FirstOrDefault(x => x.TarefaId == id);
+
+            if (tarefaEncontrada != null)
+            {
+                tarefaEncontrada.Concluida = true;
                 _ctx.Tarefas.Update(tarefaEncontrada);
                 _ctx.SaveChanges();
                 return Ok();

@@ -1,0 +1,20 @@
+### Listar de produtos
+GET https://localhost:7213/usuario/listar
+
+### Buscar produtos
+GET https://localhost:7213/usuario/buscar/1
+
+### Cadastrar produto
+POST https://localhost:7213/usuario/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "Fulano",
+    "username" : "fulano",
+    "senha": "123456",
+    "email": "rita@gmail.com",
+    "telefone": "41997317647",
+    "tarefas": [{
+        "tarefaId": 1
+    }]
+}

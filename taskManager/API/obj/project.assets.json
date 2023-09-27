@@ -1593,11 +1593,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/taskManager/API/API.csproj",
+      "projectUniqueName": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/task_csharp/taskManager/API/API.csproj",
       "projectName": "API",
-      "projectPath": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/taskManager/API/API.csproj",
+      "projectPath": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/task_csharp/taskManager/API/API.csproj",
       "packagesPath": "/home/rita/.nuget/packages/",
-      "outputPath": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/taskManager/API/obj/",
+      "outputPath": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/task_csharp/taskManager/API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/rita/.nuget/NuGet/NuGet.Config"

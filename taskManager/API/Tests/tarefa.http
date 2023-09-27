@@ -1,0 +1,15 @@
+### Listar de produtos
+GET https://localhost:7213/tarefa/listar
+
+### Buscar produtos
+GET https://localhost:7213/tarefa/buscar/1
+
+### Cadastrar produto
+POST https://localhost:7213/tarefa/cadastrar
+Content-Type: application/json
+
+{
+    "titulo" : "Nova",
+    "descricao" : "hihi",
+    "concluirEm": "2023-09-30T21:24:42.4409764-03:00"
+}

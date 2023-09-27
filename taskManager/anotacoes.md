@@ -1,11 +1,15 @@
 ## Fazer
-- Criar controller de Usuario
-- Criar controller da Equipe
+- OK Criar controller de Usuario
+- OK Criar controller da Equipe
+
 -> Ajustar CRUD de cada uma delas de acordo com as regras de negocio
-    - Tarefas
+    - OK Tarefas
     - Usuario
     - Equipe
+-> Ajustar metodo "Alterar" do Usuario para alterar/incluir tarefas
+-> Ajustar metodo cadastrar do Usuario para fazer o relacionamento com a Tarefa
 
+-> Ajustar metodos da Equipe
 
 ## 04/08 - conexão com o banco de dados
 -> Entity framework - oficial da microsoft
@@ -75,3 +79,9 @@
 # FirstOrDefault 
     -> é um método de extensão em C# que faz parte do LINQ (Language Integrated Query), um recurso que permite realizar consultas em coleções e outros tipos de dados de forma fácil e consistente. O FirstOrDefault é usado para retornar o primeiro elemento de uma sequência ou coleção, ou um valor padrão se a sequência estiver vazia.
     -> permitindo filtrar a busca pelo primeiro elemento que atenda a uma condição específica
+    -> só retorna um objeto
+
+# Aula 25/09 - relacionamento
+-> Quando for um para muitos a chave estrangeira vai no muitos
+    - ex: categoria vai em produtos
+    

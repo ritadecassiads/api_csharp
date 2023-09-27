@@ -14,5 +14,6 @@ public class AppDataContext : DbContext // obrigatoriamente precisa herdar dessa
     // aqui eu digo pro entity framework saber quais serão as classes que serão tabelas no banco de dados
     public DbSet<Tarefa> Tarefas { get; set; } // metodo que cria no banco a tabela produtos
     // sempre mapear as classes modelos aqui para que o banco saiba quais serão as tabelas
-    //public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Equipe> Equipes { get; set; }
 }
