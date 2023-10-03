@@ -7,5 +7,6 @@ public class Usuario
     public string? Senha { get; set; }
     public string? Email { get; set; }
     public string? Telefone { get; set; }
-    public List<Tarefa>? Tarefas { get; set; }
+
+    public ICollection<EquipeUsuarioTarefa>? EquipeUsuarioTarefas { get; set; }
 }

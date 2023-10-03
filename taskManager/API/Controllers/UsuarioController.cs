@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace API
 {
     [ApiController]
-    [Route("usuario")] // Alterado para "usuario"
-    public class UsuarioController : ControllerBase // Alterado para "UsuarioController"
+    [Route("usuario")]
+    public class UsuarioController : ControllerBase
     {
         private readonly AppDataContext _ctx;
 
@@ -21,7 +21,7 @@ namespace API
         {
             try
             {
-                List<Usuario> usuarios = _ctx.Usuarios.ToList(); // Alterado para "Usuarios"
+                List<Usuario> usuarios = _ctx.Usuarios.ToList();
                 return usuarios.Count == 0 ? NotFound() : Ok(usuarios);
             }
             catch (Exception e)
@@ -32,7 +32,7 @@ namespace API
 
         [HttpPost]
         [Route("cadastrar")]
-        public IActionResult Cadastrar([FromBody] Usuario usuario) // Alterado para "Usuario"
+        public IActionResult Cadastrar([FromBody] Usuario usuario)
         {
 
             try
@@ -111,22 +111,32 @@ namespace API
 
                 if (usuarioEncontrado != null)
                 {
-                    usuarioEncontrado.Nome = usuario.Nome;
-                    usuarioEncontrado.Email = usuario.Email;
-                    usuarioEncontrado.Username = usuario.Username;
-                    usuarioEncontrado.Senha = usuario.Senha;
-                    usuarioEncontrado.Telefone = usuario.Telefone;
+                    // Verifique e atualize apenas os campos que estão preenchidos no payload
+                    if (!string.IsNullOrEmpty(usuario.Nome))
+                        usuarioEncontrado.Nome = usuario.Nome;
 
-                    if (usuario.Tarefas != null)
-                    {
-                        foreach (var tarefa in usuario.Tarefas)
-                        {
-                            // verifico se a tarefa já existe no banco de dados
-                            var tarefaExistente = _ctx.Tarefas.FirstOrDefault(t => t.TarefaId == tarefa.TarefaId);
-                            if (tarefaExistente != null)
-                                usuarioEncontrado.Tarefas.Add(tarefaExistente);
-                        }
-                    }
+                    if (!string.IsNullOrEmpty(usuario.Email))
+                        usuarioEncontrado.Email = usuario.Email;
+
+                    if (!string.IsNullOrEmpty(usuario.Username))
+                        usuarioEncontrado.Username = usuario.Username;
+
+                    if (!string.IsNullOrEmpty(usuario.Senha))
+                        usuarioEncontrado.Senha = usuario.Senha;
+
+                    if (!string.IsNullOrEmpty(usuario.Telefone))
+                        usuarioEncontrado.Telefone = usuario.Telefone;
+                    
+                    // if (usuario.Tarefas != null)
+                    // {
+                    //     foreach (var tarefa in usuario.Tarefas)
+                    //     {
+                    //         // verifico se a tarefa já existe no banco de dados
+                    //         var tarefaExistente = _ctx.Tarefas.FirstOrDefault(t => t.TarefaId == tarefa.TarefaId);
+                    //         if (tarefaExistente != null)
+                    //             usuarioEncontrado.Tarefas.Add(tarefaExistente);
+                    //     }
+                    // }
 
                     _ctx.Usuarios.Update(usuarioEncontrado);
                     _ctx.SaveChanges();

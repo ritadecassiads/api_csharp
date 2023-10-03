@@ -23,9 +23,32 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Nome")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("EquipeId");
 
                     b.ToTable("Equipes");
+                });
+
+            modelBuilder.Entity("API.Models.EquipeUsuarioTarefa", b =>
+                {
+                    b.Property<int?>("EquipeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TarefaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("EquipeId", "UsuarioId", "TarefaId");
+
+                    b.HasIndex("TarefaId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("EquipeUsuarioTarefa");
                 });
 
             modelBuilder.Entity("API.Models.Tarefa", b =>
@@ -46,15 +69,10 @@ namespace API.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("EquipeId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Titulo")
                         .HasColumnType("TEXT");
 
                     b.HasKey("TarefaId");
-
-                    b.HasIndex("EquipeId");
 
                     b.ToTable("Tarefas");
                 });
@@ -68,20 +86,11 @@ namespace API.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("EquipeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Logado")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Nome")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Senha")
                         .HasColumnType("TEXT");
-
-                    b.Property<int?>("TarefaId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Telefone")
                         .HasColumnType("TEXT");
@@ -91,38 +100,49 @@ namespace API.Migrations
 
                     b.HasKey("UsuarioId");
 
-                    b.HasIndex("EquipeId");
-
-                    b.HasIndex("TarefaId");
-
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("API.Models.Tarefa", b =>
+            modelBuilder.Entity("API.Models.EquipeUsuarioTarefa", b =>
                 {
-                    b.HasOne("API.Models.Equipe", null)
-                        .WithMany("Tarefas")
-                        .HasForeignKey("EquipeId");
-                });
-
-            modelBuilder.Entity("API.Models.Usuario", b =>
-                {
-                    b.HasOne("API.Models.Equipe", null)
-                        .WithMany("Usuarios")
-                        .HasForeignKey("EquipeId");
+                    b.HasOne("API.Models.Equipe", "Equipe")
+                        .WithMany("EquipeUsuarioTarefas")
+                        .HasForeignKey("EquipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("API.Models.Tarefa", "Tarefa")
-                        .WithMany()
-                        .HasForeignKey("TarefaId");
+                        .WithMany("EquipeUsuarioTarefas")
+                        .HasForeignKey("TarefaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.Usuario", "Usuario")
+                        .WithMany("EquipeUsuarioTarefas")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Equipe");
 
                     b.Navigation("Tarefa");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("API.Models.Equipe", b =>
                 {
-                    b.Navigation("Tarefas");
+                    b.Navigation("EquipeUsuarioTarefas");
+                });
 
-                    b.Navigation("Usuarios");
+            modelBuilder.Entity("API.Models.Tarefa", b =>
+                {
+                    b.Navigation("EquipeUsuarioTarefas");
+                });
+
+            modelBuilder.Entity("API.Models.Usuario", b =>
+                {
+                    b.Navigation("EquipeUsuarioTarefas");
                 });
 #pragma warning restore 612, 618
         }
