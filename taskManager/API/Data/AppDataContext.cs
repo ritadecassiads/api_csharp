@@ -17,6 +17,8 @@ public class AppDataContext : DbContext // obrigatoriamente precisa herdar dessa
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Equipe> Equipes { get; set; }
 
+    public DbSet<EquipeUsuarioTarefa> EquipeUsuarioTarefas { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // defino que a chave primaria da tabela EquipeUsuarioTarefa será uma chave "composta" baseada nos ids de quipe, usuario e tarefa

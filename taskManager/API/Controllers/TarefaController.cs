@@ -58,7 +58,7 @@ public class TarefaController : ControllerBase
                 }
                 else
                 {
-                    
+
                     _ctx.Tarefas.Add(tarefa);
                     _ctx.SaveChanges();
 

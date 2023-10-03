@@ -9,7 +9,7 @@ POST https://localhost:7213/tarefa/cadastrar
 Content-Type: application/json
 
 {
-    "titulo" : "Nova tarefa",
+    "titulo" : "Nova",
     "descricao" : "hihi",
     "concluirEm": "2023-09-30T21:24:42.4409764-03:00"
 }

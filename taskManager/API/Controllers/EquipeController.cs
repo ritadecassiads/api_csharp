@@ -36,41 +36,13 @@ namespace API
         {
             try
             {
-                // salvo a equipe pra gerar o id
+                // verifico se tem alguma informação no payload na colection do relacionamento
+                // if(equipe.EquipeUsuarioTarefas != null){
+                //     // se houver, eu crio uma instancia de da tabela de relacionamento
+                //     EquipeUsuarioTarefa Relacionamento = new();
+
+                // }                
                 _ctx.Equipes.Add(equipe);
-                _ctx.SaveChanges();
-
-                // Associe usuários à equipe (se houver)
-                // if (equipe.Usuarios != null)
-                // {
-                //     foreach (var usuario in equipe.Usuarios)
-                //     {
-                //         // Obtenha o usuário do banco de dados
-                //         var usuarioEncontrado = _ctx.Usuarios.FirstOrDefault(u => u.UsuarioId == usuario.UsuarioId);
-
-                //         if (usuarioEncontrado != null)
-                //         {
-                //             // Associe o usuário à equipe
-                //             usuarioEncontrado.EquipeId = equipe.EquipeId;
-                //         }
-                //     }
-                // }
-
-                // Associe tarefas à equipe (se houver)
-                // if (equipe.Tarefas != null && equipe.Tarefas.Any())
-                // {
-                //     foreach (var tarefa in equipe.Tarefas)
-                //     {
-                //         // Obtenha a tarefa do banco de dados
-                //         var tarefaEncontrada = _ctx.Tarefas.FirstOrDefault(t => t.TarefaId == tarefa.TarefaId);
-
-                //         if (tarefaEncontrada != null)
-                //         {
-                //             // Associe a tarefa à equipe
-                //             tarefaEncontrada.EquipeId = equipe.EquipeId;
-                //         }
-                //     }
-                // }
 
                 _ctx.SaveChanges();
                 return Created("", new { message = "Equipe cadastrada com sucesso!", equipe });

@@ -1,6 +1,7 @@
 namespace API.Models;
 public class EquipeUsuarioTarefa
 {
+    public int EquipeUsuarioTarefaId { get; set; }
 
     // classe que armazenará o relacionamento muitos para muitos entre as entidades
     public Equipe? Equipe { get; set; }
