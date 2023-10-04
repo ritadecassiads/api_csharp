@@ -1,14 +1,3 @@
-## Fazer
-
-- OK Criar controller de Usuario
-- OK Criar controller da Equipe
-
--> Ajustar CRUD de cada uma delas de acordo com as regras de negocio - OK Tarefas - Usuario - Equipe
--> Ajustar metodo "Alterar" do Usuario para alterar/incluir tarefas
--> Ajustar metodo cadastrar do Usuario para fazer o relacionamento com a Tarefa
-
--> Ajustar metodos da Equipe
-
 ## 04/08 - conexão com o banco de dados
 
 -> Entity framework - oficial da microsoft - ORM: mapeia objetos para um banco de dados relacional - entende e converte codigo para scripts sql - faz a intermediação entre a aplicação e o banco - precisa criar uma classe para representar o entity framework - AppDataContext - classe que vai fazer toda a interface entre a aplicação e o banco de dados - contexto = referencia do banco de dados dentro da aplicacao
