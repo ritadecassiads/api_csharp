@@ -8,5 +8,8 @@ public class Usuario
     public string? Email { get; set; }
     public string? Telefone { get; set; }
 
-    public ICollection<EquipeUsuarioTarefa>? EquipeUsuarioTarefas { get; set; }
+    // public Equipe? Equipe { get; set; }
+    // public int EquipeId { get; set; }
+
+    // public ICollection<EquipeUsuarioTarefa>? EquipeUsuarioTarefas { get; set; }
 }

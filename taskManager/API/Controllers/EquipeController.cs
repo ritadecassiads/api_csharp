@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace API
 {
     [ApiController]
-    [Route("equipe")] // Alterado para "equipe"
-    public class EquipeController : ControllerBase // Alterado para "EquipeController"
+    [Route("equipe")]
+    public class EquipeController : ControllerBase
     {
         private readonly AppDataContext _ctx;
 
@@ -35,13 +35,7 @@ namespace API
         public IActionResult Cadastrar([FromBody] Equipe equipe)
         {
             try
-            {
-                // verifico se tem alguma informação no payload na colection do relacionamento
-                // if(equipe.EquipeUsuarioTarefas != null){
-                //     // se houver, eu crio uma instancia de da tabela de relacionamento
-                //     EquipeUsuarioTarefa Relacionamento = new();
-
-                // }                
+            {                             
                 _ctx.Equipes.Add(equipe);
 
                 _ctx.SaveChanges();
@@ -59,9 +53,9 @@ namespace API
         {
             try
             {
-                Equipe? equipeEncontrada = _ctx.Equipes.FirstOrDefault(x => x.EquipeId == id); // Alterado para "Equipe"
+                Equipe? equipeEncontrada = _ctx.Equipes.FirstOrDefault(x => x.EquipeId == id);
 
-                return equipeEncontrada != null ? Ok(equipeEncontrada) : NotFound(); // Alterado para "Equipe"
+                return equipeEncontrada != null ? Ok(equipeEncontrada) : NotFound();
             }
             catch (Exception e)
             {
@@ -75,10 +69,10 @@ namespace API
         {
             try
             {
-                Equipe? equipeEncontrada = _ctx.Equipes.Find(id); // Alterado para "Equipe"
+                Equipe? equipeEncontrada = _ctx.Equipes.Find(id);
                 if (equipeEncontrada != null)
                 {
-                    _ctx.Equipes.Remove(equipeEncontrada); // Alterado para "Equipes"
+                    _ctx.Equipes.Remove(equipeEncontrada);
                     _ctx.SaveChanges();
                     return Ok();
                 }
@@ -92,17 +86,17 @@ namespace API
 
         [HttpPut]
         [Route("alterar/{id}")]
-        public IActionResult Alterar([FromRoute] int id, [FromBody] Equipe equipe) // Alterado para "Equipe"
+        public IActionResult Alterar([FromRoute] int id, [FromBody] Equipe equipe)
         {
             try
             {
-                Equipe? equipeEncontrada = _ctx.Equipes.FirstOrDefault(x => x.EquipeId == id); // Alterado para "Equipe"
+                Equipe? equipeEncontrada = _ctx.Equipes.FirstOrDefault(x => x.EquipeId == id);
 
                 if (equipeEncontrada != null)
                 {
                     equipeEncontrada.Nome = equipe.Nome;
 
-                    _ctx.Equipes.Update(equipeEncontrada); // Alterado para "Equipes"
+                    _ctx.Equipes.Update(equipeEncontrada);
                     _ctx.SaveChanges();
                     return Ok();
                 }

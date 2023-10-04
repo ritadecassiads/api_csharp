@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20231003191229_atualizaRelacionamentoMuitosPMuitos")]
-    partial class atualizaRelacionamentoMuitosPMuitos
+    [Migration("20231004230848_addEquipe")]
+    partial class addEquipe
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,26 +31,6 @@ namespace API.Migrations
                     b.HasKey("EquipeId");
 
                     b.ToTable("Equipes");
-                });
-
-            modelBuilder.Entity("API.Models.EquipeUsuarioTarefa", b =>
-                {
-                    b.Property<int?>("EquipeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("UsuarioId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TarefaId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("EquipeId", "UsuarioId", "TarefaId");
-
-                    b.HasIndex("TarefaId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("EquipeUsuarioTarefa");
                 });
 
             modelBuilder.Entity("API.Models.Tarefa", b =>
@@ -74,7 +54,12 @@ namespace API.Migrations
                     b.Property<string>("Titulo")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("TarefaId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Tarefas");
                 });
@@ -105,46 +90,13 @@ namespace API.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("API.Models.EquipeUsuarioTarefa", b =>
-                {
-                    b.HasOne("API.Models.Equipe", "Equipe")
-                        .WithMany("EquipeUsuarioTarefas")
-                        .HasForeignKey("EquipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Models.Tarefa", "Tarefa")
-                        .WithMany("EquipeUsuarioTarefas")
-                        .HasForeignKey("TarefaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Models.Usuario", "Usuario")
-                        .WithMany("EquipeUsuarioTarefas")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Equipe");
-
-                    b.Navigation("Tarefa");
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("API.Models.Equipe", b =>
-                {
-                    b.Navigation("EquipeUsuarioTarefas");
-                });
-
             modelBuilder.Entity("API.Models.Tarefa", b =>
                 {
-                    b.Navigation("EquipeUsuarioTarefas");
-                });
+                    b.HasOne("API.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
 
-            modelBuilder.Entity("API.Models.Usuario", b =>
-                {
-                    b.Navigation("EquipeUsuarioTarefas");
+                    b.Navigation("Usuario");
                 });
 #pragma warning restore 612, 618
         }

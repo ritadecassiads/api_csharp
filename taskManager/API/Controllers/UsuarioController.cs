@@ -126,17 +126,6 @@ namespace API
 
                     if (!string.IsNullOrEmpty(usuario.Telefone))
                         usuarioEncontrado.Telefone = usuario.Telefone;
-                    
-                    // if (usuario.Tarefas != null)
-                    // {
-                    //     foreach (var tarefa in usuario.Tarefas)
-                    //     {
-                    //         // verifico se a tarefa já existe no banco de dados
-                    //         var tarefaExistente = _ctx.Tarefas.FirstOrDefault(t => t.TarefaId == tarefa.TarefaId);
-                    //         if (tarefaExistente != null)
-                    //             usuarioEncontrado.Tarefas.Add(tarefaExistente);
-                    //     }
-                    // }
 
                     _ctx.Usuarios.Update(usuarioEncontrado);
                     _ctx.SaveChanges();

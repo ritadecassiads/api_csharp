@@ -2,17 +2,17 @@ using System.Globalization;
 using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API;
 
-[ApiController] // anotação para api controller 
-// estrutura basica para as controllers
+[ApiController]
 
-[Route("tarefa")] // rota para acessar 
+[Route("tarefa")]
 
 public class TarefaController : ControllerBase
 {
-    private readonly AppDataContext _ctx; // declaro uma variavel global para acessar todas as opções do contexto(como se fosse a model do mongo) em varios metodos
+    private readonly AppDataContext _ctx;
 
     public TarefaController(AppDataContext ctx)
     {
@@ -58,6 +58,17 @@ public class TarefaController : ControllerBase
                 }
                 else
                 {
+                    // verifico se o campo usuarioId é nulo
+                    if (tarefa.UsuarioId != null)
+                    {
+                        Usuario? usuario = _ctx.Usuarios.Find(tarefa.UsuarioId);
+                        if (usuario == null)
+                        {
+                            return NotFound();
+                        }
+                        // associo o usuario encontrado no banco a tarefa
+                        tarefa.Usuario = usuario;
+                    }
 
                     _ctx.Tarefas.Add(tarefa);
                     _ctx.SaveChanges();
@@ -79,7 +90,9 @@ public class TarefaController : ControllerBase
     {
         try
         {
-            Tarefa? tarefaEncontrada = _ctx.Tarefas.FirstOrDefault(x => x.TarefaId == id); // percorro os itens de tarefa do banco e verifico se o id delas é igual ao id passado por parametro na url
+            Tarefa? tarefaEncontrada = _ctx.Tarefas
+                                        .Include(x => x.Usuario)
+                                        .FirstOrDefault(x => x.TarefaId == id); // percorro os itens de tarefa do banco e verifico se o id delas é igual ao id passado por parametro na url
 
             return tarefaEncontrada != null ? Ok(tarefaEncontrada) : NotFound();
         }
@@ -123,13 +136,29 @@ public class TarefaController : ControllerBase
 
             if (tarefaEncontrada != null)
             {
-                tarefaEncontrada.Titulo = tarefa.Titulo;
-                tarefaEncontrada.Descricao = tarefa.Descricao;
-                tarefaEncontrada.ConcluirEm = tarefa.ConcluirEm;
+                // verifico quais campos possuem informação e altero apenas eles
+                if (!string.IsNullOrEmpty(tarefa.Titulo))
+                {
+                    tarefaEncontrada.Titulo = tarefa.Titulo;
+                }
+
+                if (!string.IsNullOrEmpty(tarefa.Descricao))
+                {
+                    tarefaEncontrada.Descricao = tarefa.Descricao;
+                }
+
+                if (tarefa.UsuarioId != 0)
+                {
+                    Usuario? usuario = _ctx.Usuarios.Find(tarefa.UsuarioId);
+                    if (usuario != null)
+                    {
+                        tarefaEncontrada.Usuario = usuario;
+                    }
+                }
 
                 _ctx.Tarefas.Update(tarefaEncontrada);
                 _ctx.SaveChanges();
-                return Ok();
+                return Ok(new { message = "Tarefa atualizado com sucessa!", tarefaEncontrada });
             }
             return NotFound();
         }
@@ -143,7 +172,7 @@ public class TarefaController : ControllerBase
     [Route("alterarConcluida/{id}")]
     public IActionResult AlterarConcluida([FromRoute] int id)
     {
-        // metodo que alterera a tarefa para concluída
+        // metodo que alterera apenas a tarefa para concluída - nao precisa de payload
         try
         {
             Tarefa? tarefaEncontrada = _ctx.Tarefas.FirstOrDefault(x => x.TarefaId == id);
@@ -153,7 +182,7 @@ public class TarefaController : ControllerBase
                 tarefaEncontrada.Concluida = true;
                 _ctx.Tarefas.Update(tarefaEncontrada);
                 _ctx.SaveChanges();
-                return Ok();
+                return Ok(tarefaEncontrada);
             }
             return NotFound();
         }
