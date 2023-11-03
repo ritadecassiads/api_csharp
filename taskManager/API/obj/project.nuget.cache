@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yX+xjUJZ9ExHkYSedwz5TVqcVr5Md5BjKswhv19mRnTHGcklg8mKMtT3V7y8n/Lm9mDp0bqxOXfhunq0d7GInQ==",
+  "dgSpecHash": "aO7H5MFNhFnDSn0Z+eCad42HA6yKSMAFlzk0OnG6/YgoFEwhGDFTfgq0udcAuRg6Zt1lBRRJLFm1bmwaadGWsA==",
   "success": true,
-  "projectFilePath": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/task_csharp/taskManager/API/API.csproj",
+  "projectFilePath": "/home/rita/facu/aulas/4semestre/dev visual/C#/meus projetos/task_csharp/taskManager/API/API.csproj",
   "expectedPackageFiles": [
     "/home/rita/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/home/rita/.nuget/packages/microsoft.data.sqlite.core/6.0.21/microsoft.data.sqlite.core.6.0.21.nupkg.sha512",

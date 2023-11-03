@@ -19,9 +19,6 @@ public class Tarefa
     public Usuario? Usuario { get; set; }
     public int? UsuarioId { get; set; }
 
-    // public Equipe? Equipe { get; set; }
-    // public int EquipeId { get; set; }
-
-    // entity entende o mapeamento dessa entidade como um relacionamento
-    // public ICollection<EquipeUsuarioTarefa>? EquipeUsuarioTarefas { get; set; }
+    public Equipe? Equipe { get; set; }
+    public int? EquipeId { get; set; }
 }

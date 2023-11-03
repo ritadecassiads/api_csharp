@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/task_csharp/taskManager/API/API.csproj": {}
+    "/home/rita/facu/aulas/4semestre/dev visual/C#/meus projetos/task_csharp/taskManager/API/API.csproj": {}
   },
   "projects": {
-    "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/task_csharp/taskManager/API/API.csproj": {
+    "/home/rita/facu/aulas/4semestre/dev visual/C#/meus projetos/task_csharp/taskManager/API/API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/task_csharp/taskManager/API/API.csproj",
+        "projectUniqueName": "/home/rita/facu/aulas/4semestre/dev visual/C#/meus projetos/task_csharp/taskManager/API/API.csproj",
         "projectName": "API",
-        "projectPath": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/task_csharp/taskManager/API/API.csproj",
+        "projectPath": "/home/rita/facu/aulas/4semestre/dev visual/C#/meus projetos/task_csharp/taskManager/API/API.csproj",
         "packagesPath": "/home/rita/.nuget/packages/",
-        "outputPath": "/home/rita/Documents/facu/aulas/4semestre/dev visual/meus projetos/task_csharp/taskManager/API/obj/",
+        "outputPath": "/home/rita/facu/aulas/4semestre/dev visual/C#/meus projetos/task_csharp/taskManager/API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/rita/.nuget/NuGet/NuGet.Config"
@@ -71,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.122/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.124/RuntimeIdentifierGraph.json"
         }
       }
     }

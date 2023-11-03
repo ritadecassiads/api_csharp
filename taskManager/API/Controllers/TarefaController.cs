@@ -70,6 +70,18 @@ public class TarefaController : ControllerBase
                         tarefa.Usuario = usuario;
                     }
 
+                                        // verifico se o campo usuarioId é nulo
+                    if (tarefa.EquipeId != null)
+                    {
+                        Equipe? equipe = _ctx.Equipes.Find(tarefa.EquipeId);
+                        if (equipe == null)
+                        {
+                            return NotFound();
+                        }
+                        // associo o usuario encontrado no banco a tarefa
+                        tarefa.Equipe = equipe;
+                    }
+
                     _ctx.Tarefas.Add(tarefa);
                     _ctx.SaveChanges();
 
