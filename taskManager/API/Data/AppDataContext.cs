@@ -8,10 +8,10 @@ public class AppDataContext : DbContext
     public AppDataContext(DbContextOptions<AppDataContext> options) :
     base(options)
     { }
-    public DbSet<Tarefa> Tarefas { get; set; } 
+    public DbSet<Tarefa> Tarefas { get; set; }
 
     public DbSet<Usuario> Usuarios { get; set; }
-    
+
     public DbSet<Equipe> Equipes { get; set; }
 
     // public DbSet<EquipeUsuarioTarefa> EquipeUsuarioTarefa { get; set; }

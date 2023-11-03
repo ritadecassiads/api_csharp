@@ -58,19 +58,36 @@ public class TarefaController : ControllerBase
                 }
                 else
                 {
-                    // verifico se o campo usuarioId é nulo
                     if (tarefa.UsuarioId != null)
                     {
                         Usuario? usuario = _ctx.Usuarios.Find(tarefa.UsuarioId);
+
                         if (usuario == null)
                         {
                             return NotFound();
+                        }
+
+                        // Verifique se o usuário já tem uma equipe associada
+                        if (usuario.EquipeId == null)
+                        {
+                            if (tarefa.EquipeId != null)
+                            {
+                                Equipe? equipe = _ctx.Equipes.Find(tarefa.EquipeId);
+
+                                if (equipe == null)
+                                {
+                                    return NotFound(new { message = "Equipe não encontrada!" });
+                                }
+
+                                // Associo a equipe ao usuário
+                                usuario.Equipe = equipe;
+                                usuario.EquipeId = equipe.EquipeId;
+                            }
                         }
                         // associo o usuario encontrado no banco a tarefa
                         tarefa.Usuario = usuario;
                     }
 
-                                        // verifico se o campo usuarioId é nulo
                     if (tarefa.EquipeId != null)
                     {
                         Equipe? equipe = _ctx.Equipes.Find(tarefa.EquipeId);
@@ -78,8 +95,9 @@ public class TarefaController : ControllerBase
                         {
                             return NotFound();
                         }
-                        // associo o usuario encontrado no banco a tarefa
+                        // associo a equipe encontrada no banco a tarefa
                         tarefa.Equipe = equipe;
+
                     }
 
                     _ctx.Tarefas.Add(tarefa);
