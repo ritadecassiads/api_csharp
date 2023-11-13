@@ -22,7 +22,7 @@ namespace API
             try
             {
                 List<Usuario> usuarios = _ctx.Usuarios.ToList();
-                return usuarios.Count == 0 ? NotFound() : Ok(usuarios);
+                return usuarios.Count == 0 ? NoContent() : Ok(usuarios);
             }
             catch (Exception e)
             {

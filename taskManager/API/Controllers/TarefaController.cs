@@ -27,7 +27,7 @@ public class TarefaController : ControllerBase
         try
         {
             List<Tarefa> tarefas = _ctx.Tarefas.ToList();
-            return tarefas.Count == 0 ? NotFound() : Ok(tarefas);
+            return tarefas.Count == 0 ? NoContent() : Ok(tarefas);
         }
         catch (Exception e)
         {

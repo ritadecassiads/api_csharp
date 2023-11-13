@@ -22,7 +22,7 @@ namespace API
             try
             {
                 List<Equipe> equipes = _ctx.Equipes.ToList();
-                return equipes.Count == 0 ? NotFound() : Ok(equipes);
+                return equipes.Count == 0 ? NoContent() : Ok(equipes);
             }
             catch (Exception e)
             {
