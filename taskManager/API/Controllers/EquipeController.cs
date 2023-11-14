@@ -37,9 +37,9 @@ namespace API
             try
             {                             
                 _ctx.Equipes.Add(equipe);
-
                 _ctx.SaveChanges();
-                return Created("", new { message = "Equipe cadastrada com sucesso!", equipe });
+
+                return Created("", new { equipe.EquipeId, equipe.Nome });
             }
             catch (Exception e)
             {

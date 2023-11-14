@@ -10,6 +10,4 @@ public class Usuario
 
     public Equipe? Equipe { get; set; }
     public int? EquipeId { get; set; }
-
-    // public ICollection<EquipeUsuarioTarefa>? EquipeUsuarioTarefas { get; set; }
 }

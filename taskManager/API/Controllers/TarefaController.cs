@@ -177,14 +177,48 @@ public class TarefaController : ControllerBase
                     tarefaEncontrada.Descricao = tarefa.Descricao;
                 }
 
-                if (tarefa.UsuarioId != 0)
-                {
-                    Usuario? usuario = _ctx.Usuarios.Find(tarefa.UsuarioId);
-                    if (usuario != null)
+
+                if (tarefa.UsuarioId != null)
                     {
+                        Usuario? usuario = _ctx.Usuarios.Find(tarefa.UsuarioId);
+
+                        if (usuario == null)
+                        {
+                            return NotFound();
+                        }
+
+                        // Verifique se o usuário já tem uma equipe associada
+                        if (usuario.EquipeId == null)
+                        {
+                            if (tarefa.EquipeId != null)
+                            {
+                                Equipe? equipe = _ctx.Equipes.Find(tarefa.EquipeId);
+
+                                if (equipe == null)
+                                {
+                                    return NotFound(new { message = "Equipe não encontrada!" });
+                                }
+
+                                // Associo a equipe ao usuário
+                                usuario.Equipe = equipe;
+                                usuario.EquipeId = equipe.EquipeId;
+                            }
+                        }
+                        // associo o usuario encontrado no banco a tarefa
                         tarefaEncontrada.Usuario = usuario;
                     }
-                }
+
+                    if (tarefa.EquipeId != null)
+                    {
+                        Equipe? equipe = _ctx.Equipes.Find(tarefa.EquipeId);
+                        if (equipe == null)
+                        {
+                            return NotFound();
+                        }
+                        // associo a equipe encontrada no banco a tarefa
+                        tarefaEncontrada.Equipe = equipe;
+
+                    }
 
                 _ctx.Tarefas.Update(tarefaEncontrada);
                 _ctx.SaveChanges();
