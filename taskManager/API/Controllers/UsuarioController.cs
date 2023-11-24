@@ -127,9 +127,20 @@ namespace API
                     if (!string.IsNullOrEmpty(usuario.Telefone))
                         usuarioEncontrado.Telefone = usuario.Telefone;
 
+                    if (usuario.EquipeId != null)
+                    {
+                        Equipe? equipe = _ctx.Equipes.Find(usuario.EquipeId);
+                        if (equipe == null)
+                        {
+                            return NotFound();
+                        }
+                        // associo a equipe encontrada no banco a tarefa
+                        usuarioEncontrado.Equipe = equipe;
+                    }    
+
                     _ctx.Usuarios.Update(usuarioEncontrado);
                     _ctx.SaveChanges();
-                    return Ok(new { message = "Usuário atualizado com sucesso!" });
+                    return Ok(new { usuario });
                 }
                 return NotFound(new { message = "Usuário não encontrado!" });
             }

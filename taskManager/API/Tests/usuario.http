@@ -9,12 +9,9 @@ POST https://localhost:7213/usuario/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "Fulano",
-    "username" : "fulano",
+    "nome": "Rita",
+    "username": "riri",
     "senha": "123456",
-    "email": "rita@gmail.com",
-    "telefone": "41997317647",
-    "tarefas": [{
-        "tarefaId": 1
-    }]
+    "email": "riri@gmail.com",
+    "telefone": "41997317647"
 }

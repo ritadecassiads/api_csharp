@@ -232,8 +232,8 @@ public class TarefaController : ControllerBase
         }
     }
 
-    [HttpPut]
-    [Route("alterarConcluida/{id}")]
+    [HttpPatch]
+    [Route("alterarconcluida/{id}")]
     public IActionResult AlterarConcluida([FromRoute] int id)
     {
         // metodo que alterera apenas a tarefa para concluída - nao precisa de payload
@@ -243,7 +243,15 @@ public class TarefaController : ControllerBase
 
             if (tarefaEncontrada != null)
             {
-                tarefaEncontrada.Concluida = true;
+                if (tarefaEncontrada.Status == "Não iniciada")
+                {
+                    tarefaEncontrada.Status = "Em andamento";
+                }
+                else
+                {
+                    tarefaEncontrada.Status = "Concluída";
+                }
+                
                 _ctx.Tarefas.Update(tarefaEncontrada);
                 _ctx.SaveChanges();
                 return Ok(tarefaEncontrada);

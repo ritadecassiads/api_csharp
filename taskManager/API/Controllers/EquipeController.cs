@@ -35,7 +35,15 @@ namespace API
         public IActionResult Cadastrar([FromBody] Equipe equipe)
         {
             try
-            {                             
+            {    
+                // verifico se ja existe no banco uma tarefa com o mesmo titulo
+                var equipeEncontrada = _ctx.Equipes.FirstOrDefault(x => x.Nome == equipe.Nome);
+
+                if (equipeEncontrada != null)
+                {
+                    return BadRequest(new { message = "Equipe já cadastrada no banco!" });
+                }
+
                 _ctx.Equipes.Add(equipe);
                 _ctx.SaveChanges();
 

@@ -8,8 +8,12 @@ GET https://localhost:7213/tarefa/buscar/1
 POST https://localhost:7213/tarefa/cadastrar
 Content-Type: application/json
 
-{
-    "titulo" : "Nova tarefa",
-    "descricao" : "hihi",
-    "concluirEm": "2023-09-30T21:24:42.4409764-03:00"
-}
+    {
+        "titulo": "Fazer algo",
+        "descricao": "Alguma coisa",
+        "concluirEm": "2023-11-05"
+    }
+
+    // opcional cadastrar com usuario e equipe
+    //    "usuarioId": 1,
+    //    "equipeId": 1
