@@ -155,83 +155,46 @@ public class TarefaController : ControllerBase
         }
     }
 
-    [HttpPut]
-    [Route("alterar/{id}")]
-    public IActionResult Alterar([FromRoute] int id, [FromBody] Tarefa tarefa)
+[HttpPut]
+[Route("alterar/{id}")]
+public IActionResult Alterar([FromRoute] int id, [FromBody] Tarefa tarefa)
+{
+    try
     {
-        // metodo que alterera as informações da tarefa
-        try
-        {
-            Tarefa? tarefaEncontrada = _ctx.Tarefas.FirstOrDefault(x => x.TarefaId == id);
+        Tarefa tarefaEncontrada = _ctx.Tarefas.FirstOrDefault(x => x.TarefaId == id);
 
-            if (tarefaEncontrada != null)
+        if (tarefaEncontrada != null)
+        {
+            // Verifique e atualize os campos conforme necessário
+            if (!string.IsNullOrEmpty(tarefa.Titulo))
             {
-                // verifico quais campos possuem informação e altero apenas eles
-                if (!string.IsNullOrEmpty(tarefa.Titulo))
-                {
-                    tarefaEncontrada.Titulo = tarefa.Titulo;
-                }
-
-                if (!string.IsNullOrEmpty(tarefa.Descricao))
-                {
-                    tarefaEncontrada.Descricao = tarefa.Descricao;
-                }
-
-
-                if (tarefa.UsuarioId != null)
-                    {
-                        Usuario? usuario = _ctx.Usuarios.Find(tarefa.UsuarioId);
-
-                        if (usuario == null)
-                        {
-                            return NotFound();
-                        }
-
-                        // Verifique se o usuário já tem uma equipe associada
-                        if (usuario.EquipeId == null)
-                        {
-                            if (tarefa.EquipeId != null)
-                            {
-                                Equipe? equipe = _ctx.Equipes.Find(tarefa.EquipeId);
-
-                                if (equipe == null)
-                                {
-                                    return NotFound(new { message = "Equipe não encontrada!" });
-                                }
-
-                                // Associo a equipe ao usuário
-                                usuario.Equipe = equipe;
-                                usuario.EquipeId = equipe.EquipeId;
-                            }
-                        }
-                        // associo o usuario encontrado no banco a tarefa
-                        tarefaEncontrada.Usuario = usuario;
-                    }
-
-                    if (tarefa.EquipeId != null)
-                    {
-                        Equipe? equipe = _ctx.Equipes.Find(tarefa.EquipeId);
-                        if (equipe == null)
-                        {
-                            return NotFound();
-                        }
-                        // associo a equipe encontrada no banco a tarefa
-                        tarefaEncontrada.Equipe = equipe;
-
-                    }
-
-                _ctx.Tarefas.Update(tarefaEncontrada);
-                _ctx.SaveChanges();
-                return Ok(new { message = "Tarefa atualizado com sucessa!", tarefaEncontrada });
+                tarefaEncontrada.Titulo = tarefa.Titulo;
             }
-            return NotFound();
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
 
+            if (!string.IsNullOrEmpty(tarefa.Descricao))
+            {
+                tarefaEncontrada.Descricao = tarefa.Descricao;
+            }
+
+            // Atualize a data de conclusão se fornecida na requisição
+            if (tarefa.ConcluirEm != null)
+            {
+                tarefaEncontrada.ConcluirEm = tarefa.ConcluirEm;
+            }
+
+            // Restante do seu código para atualização de outras propriedades da tarefa...
+
+            _ctx.Tarefas.Update(tarefaEncontrada);
+            _ctx.SaveChanges();
+            return Ok(new { message = "Tarefa atualizada com sucesso!", tarefaEncontrada });
+        }
+        return NotFound();
+    }
+    catch (Exception e)
+    {
+        return BadRequest(e.Message);
+    }
+}
     [HttpPatch]
     [Route("alterarconcluida/{id}")]
     public IActionResult AlterarConcluida([FromRoute] int id)
